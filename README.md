@@ -1,6 +1,6 @@
 # Weather-station
 
-This project is arduino internet weather station with inside temperature. Project is coded VS code.
+This project is about arduino internet weather station with inside temperature. Project is coded using VS code.
 
 ## Hardware
 
