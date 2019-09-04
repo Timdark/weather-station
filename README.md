@@ -6,7 +6,7 @@ This project is about arduino internet weather station with inside temperature. 
 
 - Arduino mega
 - mcufriend 3.5" TFT screen 320x480 pixels
-- W5100 RJ45 internet adapter
+- W5100 RJ45 Ethernet adapter
 - DS18B20 temperature sensor
 - wires and one 4k7 resistor
 
