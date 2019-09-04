@@ -7,10 +7,10 @@
 #define LCD_RESET A4 // Can alternately just connect to Arduino's reset pin
 
 // SD Card defines
-#define USE_SDFAT
-#define SD_CS     10
-#define NAMEMATCH ""         // "" matches any name
-#define PALETTEDEPTH   8     // support 256-colour Palette
+//#define USE_SDFAT
+//#define SD_CS     10
+//#define NAMEMATCH ""         // "" matches any name
+//#define PALETTEDEPTH   8     // support 256-colour Palette
 
 // LCD color defines
 // Assign human-readable names to some common 16-bit color values:
@@ -95,7 +95,7 @@ void setup() {
     ; // wait for serial port to connect. Needed for native USB port only
   }
 
-  // SS pin
+  // Ethernet SS pin
   Ethernet.init(53);
 
   // start the Ethernet connection:
