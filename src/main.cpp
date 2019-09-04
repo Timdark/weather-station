@@ -210,7 +210,7 @@ void getForecast(){
   if (client.connect(server, 80)) {
     Serial.println("connecting...");
     // send the HTTP GET request:
-    client.println("GET /data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=metric&cnt=10&appid=" + apiKey);
+    client.println("GET /data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + apiKey);
     client.println("Host: http://api.openweathermap.org");
     client.println("User-Agent: arduino-ethernet");
     client.println("Connection: close");
@@ -235,9 +235,13 @@ void getForecast(){
 void parseForecastJson(String jsonData) {
   Serial.println("parsingValues");
 
-  StaticJsonDocument<5000> root;
+  StaticJsonDocument<50000> root;
 
   deserializeJson(root, jsonData);
+
+  for(int i = 0;root["list"][i] == 0; i++) {
+  
+  }
 
   // currentTemp = root["main"]["temp"].as<String>();
   // currentIcon = root["weather"][0]["icon"].as<String>();
