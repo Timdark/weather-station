@@ -43,6 +43,8 @@
 
 #include "bitmaps.h"        // weather icons bitmaps
 
+#include "conf.h"           // openweathermap api stuff
+
 // initialize the library instance:
 EthernetClient client;
 MCUFRIEND_kbv tft;
@@ -50,11 +52,6 @@ OneWire onewire(ONE_WIRE_BUS);
 DallasTemperature sensors(&onewire);
 
  /******************************* GLOBAL STUFF **********************************/
-
-// OpenWeatherMap api stuff
-String apiKey = "06664f7556ac90aff060c6a691bf5702";
-String lat = "61.46";
-String lon = "23.85";
 
 // assign a MAC address for the ethernet controller.
 // fill in your address here:

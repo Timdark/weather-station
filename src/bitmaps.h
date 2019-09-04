@@ -1,3 +1,5 @@
+#pragma once
+
 #include <avr/pgmspace.h>
 
 // width x height = 50,50
