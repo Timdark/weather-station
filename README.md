@@ -29,5 +29,5 @@ String lon = "";
 - forecast
 - different time new data get (OWM and room temp)
 - background image
-- stuff locations in tft screen
+- object placement on the screen
 - more modular fuctions
