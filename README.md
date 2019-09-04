@@ -1,17 +1,17 @@
 # Weather-station
 
-This project is about arduino internet weather station with inside temperature. Project is coded using VS code.
+This project is about Arduino internet weather station with inside temperature. Project is coded using VS code.
 
 ## Hardware
 
 - Arduino mega
-- mcufriend 3.5" TFT screen 320x480 pixels
+- Mcufriend 3.5" TFT screen 320x480 pixels
 - W5100 RJ45 Ethernet adapter
 - DS18B20 temperature sensor
-- wires and one 4k7 resistor
+- Wires and one 4k7 resistor
 
 **Example src/conf.h file**
-This file contains openweathermap personal information. (apikey, latitude, longitude)
+This file contains OpenWeatherMap personal information. (apikey, latitude, longitude)
 
 ```
 #pragma once
@@ -30,4 +30,4 @@ String lon = "";
 - different time new data get (OWM and room temp)
 - background image
 - object placement on the screen
-- more modular fuctions
+- more modular functions
