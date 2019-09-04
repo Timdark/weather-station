@@ -4,7 +4,7 @@
 **Example src/conf.h file**
 This file contains openweathermap personal information. (apikey, latitude, longitude)
 
-´´´
+```
 #pragma once
 
 #include <Arduino.h>
@@ -13,4 +13,4 @@ This file contains openweathermap personal information. (apikey, latitude, longi
 String apiKey = "";
 String lat = "";
 String lon = "";
-´´´
+```
