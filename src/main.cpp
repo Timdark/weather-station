@@ -41,7 +41,7 @@
 #include <OneWire.h> 
 #include <DallasTemperature.h>
 
-#include "bitmaps.h"        // weather icons bitmaps
+#include "bitmaps-icons.h"        // weather icons bitmaps
 
 #include "conf.h"           // openweathermap api stuff
 
