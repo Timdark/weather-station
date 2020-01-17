@@ -1,6 +1,7 @@
 # Weather-station
 
-This project is about Arduino internet weather station with inside temperature. Project is coded using VS code.
+This project is about Arduino internet weather station with inside temperature. Project is coded using VS code. 
+Project using Weatherbit.io free weather/forecast service.
 
 ## Hardware
 
@@ -10,24 +11,33 @@ This project is about Arduino internet weather station with inside temperature. 
 - DS18B20 temperature sensor
 - Wires and one 4k7 resistor
 
+## Libraries
+- Arduino Time Library          https://github.com/PaulStoffregen/Time?utm_source=platformio&utm_medium=piohome
+- Arduino Timezone Library      https://github.com/JChristensen/Timezone
+- Arduino JPEGDecoder library   https://github.com/Bodmer/JPEGDecoder
+    - This library source files have custom modification (removed SD card support)
+- MCUFRIEND_kbv Library         https://github.com/prenticedavid/MCUFRIEND_kbv
+- ArduinoJson Library           https://arduinojson.org/
+- Adafruit_GFX
+- DallasTemperature
+- OneWire
+- Arduino & SPI
+- Ethernet
+
 **Example src/conf.h file**
-This file contains OpenWeatherMap personal information. (apikey, latitude, longitude)
+This file contains Weatherbit personal information. (apikey, latitude, longitude)
 
 ```
 #pragma once
 
 #include <Arduino.h>
 
-// OpenWeatherMap api stuff
+// Weatherbit api stuff
 String apiKey = "";
 String lat = "";
 String lon = "";
 ```
 
-## TODO
+## Image converting tools
 
-- forecast
-- different time new data get (OWM and room temp)
-- background image
-- object placement on the screen
-- more modular functions
+- File to hexadecimal converter     http://tomeko.net/online_tools/file_to_hex.php?lang=en
