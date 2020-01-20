@@ -22,25 +22,25 @@ private:
 
     // Weather data
     long epoch_now_;
-    String app_temp_now_;
+    float app_temp_now_;
 
     // Forecast data
 
     // This day
-    String day_0_app_temp_max_;
-    String day_0_app_temp_min_;
+    float day_0_app_temp_max_;
+    float day_0_app_temp_min_;
     String day_0_icon_;
 
     // This day + 1
     long day_1_epoch_;
-    String day_1_app_temp_max_;
-    String day_1_app_temp_min_;
+    float day_1_app_temp_max_;
+    float day_1_app_temp_min_;
     String day_1_icon_;
 
     // This day + 2
     long day_2_epoch_;
-    String day_2_app_temp_max_;
-    String day_2_app_temp_min_;
+    float day_2_app_temp_max_;
+    float day_2_app_temp_min_;
     String day_2_icon_;
 
     void updateWeather();
@@ -54,20 +54,20 @@ public:
 
     void update();
 
-    String getAppTempNow() const;
+    float getAppTempNow() const;
     long getEpochNow() const;
 
-    String getDay0AppTempMax() const;
-    String getDay0AppTempMin() const;
+    float getDay0AppTempMax() const;
+    float getDay0AppTempMin() const;
     String getDay0Icon() const;
 
     long getDay1Epoch() const;
-    String getDay1AppTempMax() const;
-    String getDay1AppTempMin() const;
+    float getDay1AppTempMax() const;
+    float getDay1AppTempMin() const;
     String getDay1Icon() const;
 
     long getDay2Epoch() const;
-    String getDay2AppTempMax() const;
-    String getDay2AppTempMin() const;
+    float getDay2AppTempMax() const;
+    float getDay2AppTempMin() const;
     String getDay2Icon() const;
 };

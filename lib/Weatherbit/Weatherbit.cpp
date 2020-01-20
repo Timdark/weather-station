@@ -54,7 +54,7 @@ void Weatherbit::updateWeather()
         return;
     }
 
-    app_temp_now_ = doc["data"][0]["app_temp"].as<String>();
+    app_temp_now_ = doc["data"][0]["app_temp"].as<float>();
     epoch_now_ = doc["data"][0]["ts"].as<long>();
 }
 
@@ -110,18 +110,18 @@ void Weatherbit::updateForecast()
         return;
     }
 
-    day_0_app_temp_max_ = doc["data"][0]["app_max_temp"].as<String>();
-    day_0_app_temp_min_ = doc["data"][0]["app_min_temp"].as<String>();
+    day_0_app_temp_max_ = doc["data"][0]["app_max_temp"].as<float>();
+    day_0_app_temp_min_ = doc["data"][0]["app_min_temp"].as<float>();
     day_0_icon_ = doc["data"][0]["weather"]["icon"].as<String>();
 
     day_1_epoch_ = doc["data"][1]["ts"].as<long>();
-    day_1_app_temp_max_ = doc["data"][1]["app_max_temp"].as<String>();
-    day_1_app_temp_min_ = doc["data"][1]["app_min_temp"].as<String>();
+    day_1_app_temp_max_ = doc["data"][1]["app_max_temp"].as<float>();
+    day_1_app_temp_min_ = doc["data"][1]["app_min_temp"].as<float>();
     day_1_icon_ = doc["data"][1]["weather"]["icon"].as<String>();
 
     day_2_epoch_ = doc["data"][2]["ts"].as<long>();
-    day_2_app_temp_max_ = doc["data"][2]["app_max_temp"].as<String>();
-    day_2_app_temp_min_ = doc["data"][2]["app_min_temp"].as<String>();
+    day_2_app_temp_max_ = doc["data"][2]["app_max_temp"].as<float>();
+    day_2_app_temp_min_ = doc["data"][2]["app_min_temp"].as<float>();
     day_2_icon_ = doc["data"][2]["weather"]["icon"].as<String>();
 }
 
@@ -172,17 +172,17 @@ long Weatherbit::getEpochNow() const
     return epoch_now_;
 }
 
-String Weatherbit::getAppTempNow() const
+float Weatherbit::getAppTempNow() const
 {
     return app_temp_now_;
 }
 
-String Weatherbit::getDay0AppTempMax() const
+float Weatherbit::getDay0AppTempMax() const
 {
     return day_0_app_temp_max_;
 }
 
-String Weatherbit::getDay0AppTempMin() const
+float Weatherbit::getDay0AppTempMin() const
 {
     return day_0_app_temp_min_;
 }
@@ -197,12 +197,12 @@ long Weatherbit::getDay1Epoch() const
     return day_1_epoch_;
 }
 
-String Weatherbit::getDay1AppTempMax() const
+float Weatherbit::getDay1AppTempMax() const
 {
     return day_1_app_temp_max_;
 }
 
-String Weatherbit::getDay1AppTempMin() const
+float Weatherbit::getDay1AppTempMin() const
 {
     return day_1_app_temp_min_;
 }
@@ -217,12 +217,12 @@ long Weatherbit::getDay2Epoch() const
     return day_2_epoch_;
 }
 
-String Weatherbit::getDay2AppTempMax() const
+float Weatherbit::getDay2AppTempMax() const
 {
     return day_2_app_temp_max_;
 }
 
-String Weatherbit::getDay2AppTempMin() const
+float Weatherbit::getDay2AppTempMin() const
 {
     return day_2_app_temp_min_;
 }

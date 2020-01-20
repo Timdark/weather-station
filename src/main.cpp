@@ -6,17 +6,6 @@
 #define LCD_RD A0 // LCD Read goes to Analog 0
 #define LCD_RESET A4 // Can alternately just connect to Arduino's reset pin
 
-// LCD color defines
-// Assign human-readable names to some common 16-bit color values:
-#define BLACK   0x0000
-//#define BLUE    0x001F
-//#define RED     0xF800
-//#define GREEN   0x07E0
-//#define CYAN    0x07FF
-//#define MAGENTA 0xF81F
-//#define YELLOW  0xFFE0
-#define WHITE   0xFFFF
-
 // Temperature sensor data pin
 #define ONE_WIRE_BUS 24
 
@@ -55,44 +44,21 @@ unsigned long timeTemp = 0;   // store last millis time
 
 bool light_dark = true;       // Is back gound dark or light? light = false, dark = True
 
+int color;                    // transparent icon color
+
 // Room temperature
-String insideTemp;
+float insideTemp;
+float insideTempOld;
 
 // Set timezone
 TimeChangeRule fiWinter = {"SUM", Last, Sun, Oct, 3, 120};
 TimeChangeRule fiSummer = {"WIN", Last, Sun, Mar, 3, 180};
 Timezone fi(fiSummer, fiWinter);
- 
-// functions
-void printData();
-void printIcon(int x, int y, String name);
-void getInsideTemp();
-void setBackground();
-String whatWeekday(long epoch);
-
-void drawArrayJpeg(const uint8_t arrayname[], uint32_t array_size, int xpos, int ypos);
-void jpegRender(int xpos, int ypos);
 
 /**************************** JPEG Functions ****************************/
 
 // Return the minimum of two values a and b
 #define minimum(a,b)     (((a) < (b)) ? (a) : (b))
-
-//====================================================================================
-//   This function opens the array and primes the decoder
-//====================================================================================
-void drawArrayJpeg(const uint8_t arrayname[], uint32_t array_size, int xpos, int ypos) {
-
-  boolean decoded = JpegDec.decodeArray(arrayname, array_size);
-
-  if (decoded) {
-    // render the image onto the screen at given coordinates
-    jpegRender(xpos, ypos);
-  }
-  else {
-    Serial.println("Jpeg file format not supported!");
-  }
-}
 
 //====================================================================================
 //   Decode and paint onto the TFT screen
@@ -157,56 +123,23 @@ void jpegRender(int xpos, int ypos) {
   }
 }
 
-/**************************** STARTUP SETUP *****************************/
+//====================================================================================
+//   This function opens the array and primes the decoder
+//====================================================================================
+void drawArrayJpeg(const uint8_t arrayname[], uint32_t array_size, int xpos, int ypos) {
 
-void setup() {
-  // start serial port:
-  Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
+  boolean decoded = JpegDec.decodeArray(arrayname, array_size);
+
+  if (decoded) {
+    // render the image onto the screen at given coordinates
+    jpegRender(xpos, ypos);
   }
-
-  WB.init();
-  WB.update();
-
-  // LCD INIT
-  uint16_t ID = tft.readID(); 
-
-  if (ID == 0xD3D3) ID = 0x9481; // write-only shield
-
-  tft.begin(ID);
-  tft.fillScreen(BLACK);
-  tft.setRotation(1);
-
-  // Start temp sensor
-  sensors.begin();
-
-  setBackground();
-}
-
-/******************************* MAIN LOOP ****************************/
-
-// MAIN LOOP
-void loop() {
-  if(millis() >= (timeTemp + 3600000)){    // 1h = 3600000
-    WB.update();
-    //setBackground();
-    timeTemp = millis();
+  else {
+    Serial.println(F("Jpeg file format not supported!"));
   }
-
-  getInsideTemp();
-
-  printData();
-
-  delay(10000);
 }
 
 /****************************** FUCTIONS *******************************/
-
-void getInsideTemp() {
-  sensors.requestTemperatures();
-  insideTemp = sensors.getTempCByIndex(0);
-}
 
 void setBackground() {            
   time_t utc = WB.getEpochNow();
@@ -230,41 +163,41 @@ void setBackground() {
 // Print weather icon
 void printIcon(int x, int y, String name) {
   if (name == "c01d") {  // 01d
-    tft.drawBitmap(x,y,bitmap_01d,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_01d,50,50,color);
   } else if (name == "c01n") {   // 01n
-    tft.drawBitmap(x,y,bitmap_01n,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_01n,50,50,color);
   } else if (name == "c02d") {   // 02d
-    tft.drawBitmap(x,y,bitmap_02d,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_02d,50,50,color);
   } else if (name == "c02n") {   // 02n
-    tft.drawBitmap(x,y,bitmap_02n,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_02n,50,50,color);
   } else if (name == "c03d") {   // 03d
-    tft.drawBitmap(x,y,bitmap_03d,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_03d,50,50,color);
   } else if (name == "c03n") {   // 03n
-    tft.drawBitmap(x,y,bitmap_03n,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_03n,50,50,color);
   } else if (name == "c04d") {   // 04d
-    tft.drawBitmap(x,y,bitmap_04d,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_04d,50,50,color);
   } else if (name == "c04n") {   // 04n
-    tft.drawBitmap(x,y,bitmap_04n,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_04n,50,50,color);
   } else if (name == "d01d" || name == "d02d" || name == "d03d" || name == "r01d" || name == "r02d" || name == "r03d" || name == "f01d") {   // 09d
-    tft.drawBitmap(x,y,bitmap_09d,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_09d,50,50,color);
   } else if (name == "d01n" || name == "d02n" || name == "d03n" || name == "r01n" || name == "r02n" || name == "r03n" || name == "f01d") {   // 09n
-    tft.drawBitmap(x,y,bitmap_09n,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_09n,50,50,color);
   } else if (name == "r04d" || name == "r05d" || name == "r06d") {   // 10d
-    tft.drawBitmap(x,y,bitmap_10d,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_10d,50,50,color);
   } else if (name == "r04n" || name == "r05n" || name == "r06n") {   // 10n
-    tft.drawBitmap(x,y,bitmap_10n,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_10n,50,50,color);
   } else if (name == "t01d" || name == "t02d" || name == "t03d" || name == "t04d" || name == "t05d") {   // 11d
-    tft.drawBitmap(x,y,bitmap_11d,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_11d,50,50,color);
   } else if (name == "t01n" || name == "t02n" || name == "t03n" || name == "t04n" || name == "t05n") {   // 11n
-    tft.drawBitmap(x,y,bitmap_11n,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_11n,50,50,color);
   } else if (name == "s01d" || name == "s02d" || name == "s03d" || name == "s04d" || name == "s05d" || name == "s06d") {   // 13d
-    tft.drawBitmap(x,y,bitmap_13d,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_13d,50,50,color);
   } else if (name == "s01n" || name == "s02n" || name == "s03n" || name == "s04n" || name == "s05n" || name == "s06n") {   // 13n
-    tft.drawBitmap(x,y,bitmap_13n,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_13n,50,50,color);
   } else if (name == "a01d" || name == "a02d" || name == "a03d" || name == "a04d" || name == "a05d" || name == "a06d") {   // 50d
-    tft.drawBitmap(x,y,bitmap_50d,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_50d,50,50,color);
   } else if (name == "a01n" || name == "a02n" || name == "a03n" || name == "a04n" || name == "a05n" || name == "a06n") {   // 50n
-    tft.drawBitmap(x,y,bitmap_50n,50,50,WHITE);
+    tft.drawBitmap(x,y,bitmap_50n,50,50,color);
   }
 }
 
@@ -288,8 +221,14 @@ String whatWeekday(long epoch){
     return "Fri";
   } else if (temp == 7){
     return "Sat";
+  } else {
+    return " ";
   }
 }
+
+/*
+  Celsius mark: (char)247 + "C"
+*/
 
 // Print Data to LCD
 void printData() {    
@@ -298,44 +237,120 @@ void printData() {
   String icon2Temp = WB.getDay2Icon();
 
   if(light_dark){
-    tft.setTextColor(BLACK);
+    tft.setTextColor(0);
+    color = 0;
   } else {
-    tft.setTextColor(WHITE);
+    tft.setTextColor(65535);
+    color = 65535;
   }
-  
-  // show current temp
-  printIcon(70,160,icon0Temp);
-  tft.setTextSize(3);
-  tft.setCursor(130,175);
-  tft.println(WB.getAppTempNow() + " " + (char)247 + "C");
+
+  // Temp outside and inside now
+  tft.setTextSize(6);
+  tft.setCursor(5,5);        // middle 240,70
+  if (round(WB.getAppTempNow()) > -1){
+    tft.print("+");
+  }
+  tft.println(String(round(WB.getAppTempNow())) + " / +" + String(round(insideTemp)));
+
+  // forecast day 0 aka this day
+  printIcon(10,260,icon0Temp);
   tft.setTextSize(2);
-  tft.setCursor(280,170);
-  tft.println(WB.getDay0AppTempMax() + " " + (char)247 + "C");
-  tft.setCursor(280,190);
-  tft.println(WB.getDay0AppTempMin() + " " + (char)247 + "C");
+  tft.setCursor(20,240);
+  tft.println(whatWeekday(WB.getEpochNow()));
+  tft.setCursor(70,260);
+  if (round(WB.getDay0AppTempMax()) > -1){
+    tft.print("+");
+  }
+  tft.println(String(round(WB.getDay0AppTempMax())));
+  tft.setCursor(70,290);
+  if (round(WB.getDay0AppTempMin()) > -1){
+    tft.print("+");
+  }
+  tft.println(String(round(WB.getDay0AppTempMin())));
 
   // forecast day 1
-  printIcon(10,260,icon1Temp);
+  printIcon(200,260,icon1Temp);
   tft.setTextSize(2);
-  tft.setCursor(100,230);
+  tft.setCursor(210,240);
   tft.println(whatWeekday(WB.getDay1Epoch()));
-  tft.setCursor(70,260);
-  tft.println(WB.getDay1AppTempMax() + " " + (char)247 + "C");
-  tft.setCursor(70,290);
-  tft.println(WB.getDay1AppTempMin() + " " + (char)247 + "C");
+  tft.setCursor(260,260);
+  if (round(WB.getDay1AppTempMax()) > -1){
+    tft.print("+");
+  }
+  tft.println(String(round(WB.getDay1AppTempMax())));
+  tft.setCursor(260,290);
+  if (round(WB.getDay1AppTempMin()) > -1){
+    tft.print("+");
+  }
+  tft.println(String(round(WB.getDay1AppTempMin())));
 
   // forecast day 2
-  printIcon(250,260,icon2Temp);
+  printIcon(370,260,icon2Temp);
   tft.setTextSize(2);
-  tft.setCursor(340,230);
+  tft.setCursor(380,240);
   tft.println(whatWeekday(WB.getDay2Epoch()));
-  tft.setCursor(310,260);
-  tft.println(WB.getDay2AppTempMax() + " " + (char)247 + "C");
-  tft.setCursor(310,290);
-  tft.println(WB.getDay1AppTempMin() + " " + (char)247 + "C");
+  tft.setCursor(430,260);
+  if (round(WB.getDay2AppTempMax()) > -1){
+    tft.print("+");
+  }
+  tft.println(String(round(WB.getDay2AppTempMax())));
+  tft.setCursor(430,290);
+  if (round(WB.getDay2AppTempMin()) > -1){
+    tft.print("+");
+  }
+  tft.println(String(round(WB.getDay1AppTempMin())));
+}
 
-  // show inside temp
-  tft.setTextSize(2);
-  tft.setCursor(250,5);
-  tft.println(insideTemp + " " + (char)247 + "C");
+// Get inside current temp
+void getInsideTemp() {
+  sensors.requestTemperatures();
+  insideTemp = sensors.getTempCByIndex(0);
+}
+
+/**************************** STARTUP SETUP *****************************/
+
+void setup() {
+  // start serial port:
+  //Serial.begin(9600);
+  //while (!Serial) {
+  //  ; // wait for serial port to connect. Needed for native USB port only
+  //}
+
+  WB.init();
+  WB.update();
+
+  // LCD INIT
+  uint16_t ID = tft.readID(); 
+
+  if (ID == 0xD3D3) ID = 0x9481; // write-only shield
+
+  tft.begin(ID);
+  tft.fillScreen(0);
+  tft.setRotation(1);
+
+  // Start temp sensor
+  sensors.begin();
+}
+
+/******************************* MAIN LOOP ****************************/
+
+// MAIN LOOP
+void loop() {
+  bool updateScreen = false;
+
+  getInsideTemp();
+
+  if(millis() >= (timeTemp + 3600000)){    // 1h = 3600000  // weather/forecast referesh time
+    WB.update();
+    updateScreen = true;
+    timeTemp = millis();
+  }
+
+  if(round(insideTempOld) != round(insideTemp) || updateScreen){
+    setBackground();
+    printData();
+    insideTempOld = insideTemp;
+  }
+
+  delay(60000);   // Inside temp referesh time
 }
