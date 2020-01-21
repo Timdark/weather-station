@@ -247,10 +247,12 @@ void printData() {
   // Temp outside and inside now
   tft.setTextSize(6);
   tft.setCursor(5,5);        // middle 240,70
-  if (round(WB.getAppTempNow()) > -1){
-    tft.print("+");
+  if (round(WB.getAppTempNow()) > -1) {
+    tft.print(" " + String(round(WB.getAppTempNow())));
+  } else {
+    tft.print(String(round(WB.getAppTempNow())));
   }
-  tft.println(String(round(WB.getAppTempNow())) + " / +" + String(round(insideTemp)));
+  tft.println( + " / " + String(round(insideTemp)));
 
   // forecast day 0 aka this day
   printIcon(10,260,icon0Temp);
@@ -259,12 +261,12 @@ void printData() {
   tft.println(whatWeekday(WB.getEpochNow()));
   tft.setCursor(70,260);
   if (round(WB.getDay0AppTempMax()) > -1){
-    tft.print("+");
+    tft.print(" ");
   }
   tft.println(String(round(WB.getDay0AppTempMax())));
   tft.setCursor(70,290);
   if (round(WB.getDay0AppTempMin()) > -1){
-    tft.print("+");
+    tft.print(" ");
   }
   tft.println(String(round(WB.getDay0AppTempMin())));
 
@@ -275,12 +277,12 @@ void printData() {
   tft.println(whatWeekday(WB.getDay1Epoch()));
   tft.setCursor(260,260);
   if (round(WB.getDay1AppTempMax()) > -1){
-    tft.print("+");
+    tft.print(" ");
   }
   tft.println(String(round(WB.getDay1AppTempMax())));
   tft.setCursor(260,290);
   if (round(WB.getDay1AppTempMin()) > -1){
-    tft.print("+");
+    tft.print(" ");
   }
   tft.println(String(round(WB.getDay1AppTempMin())));
 
@@ -291,12 +293,12 @@ void printData() {
   tft.println(whatWeekday(WB.getDay2Epoch()));
   tft.setCursor(430,260);
   if (round(WB.getDay2AppTempMax()) > -1){
-    tft.print("+");
+    tft.print(" ");
   }
   tft.println(String(round(WB.getDay2AppTempMax())));
   tft.setCursor(430,290);
   if (round(WB.getDay2AppTempMin()) > -1){
-    tft.print("+");
+    tft.print(" ");
   }
   tft.println(String(round(WB.getDay1AppTempMin())));
 }
