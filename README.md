@@ -19,6 +19,24 @@ Project using Weatherbit.io free weather/forecast service.
 
 - Coming soon
 
+## Secret variables file
+
+Create conf.h file src/ folder. This file contains your Weatherbit apikey and your location.
+
+**Example src/conf.h file**
+This file contains Weatherbit personal information. (apikey, latitude, longitude)
+
+```
+#pragma once
+
+#include <Arduino.h>
+
+// Weatherbit api stuff
+String apiKey = "";
+String lat = "";
+String lon = "";
+```
+
 ## Hardware
 
 - Arduino mega
@@ -39,20 +57,6 @@ Project using Weatherbit.io free weather/forecast service.
 - OneWire library               https://github.com/PaulStoffregen/OneWire
 - Arduino & SPI library
 - Ethernet library
-
-**Example src/conf.h file**
-This file contains Weatherbit personal information. (apikey, latitude, longitude)
-
-```
-#pragma once
-
-#include <Arduino.h>
-
-// Weatherbit api stuff
-String apiKey = "";
-String lat = "";
-String lon = "";
-```
 
 ## Image converting tools
 
