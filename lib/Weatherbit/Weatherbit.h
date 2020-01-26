@@ -50,7 +50,7 @@ public:
     Weatherbit(String apiKey, String lat, String lon);
     ~Weatherbit();
 
-    void init();
+    boolean init();
 
     void update();
 

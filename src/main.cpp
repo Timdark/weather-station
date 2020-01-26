@@ -318,9 +318,6 @@ void setup() {
   //  ; // wait for serial port to connect. Needed for native USB port only
   //}
 
-  WB.init();
-  WB.update();
-
   // LCD INIT
   uint16_t ID = tft.readID(); 
 
@@ -332,6 +329,10 @@ void setup() {
 
   // Start temp sensor
   sensors.begin();
+
+  if (WB.init()) {
+    WB.update();
+  }
 }
 
 /******************************* MAIN LOOP ****************************/
@@ -342,16 +343,34 @@ void loop() {
 
   getInsideTemp();
 
-  if(millis() >= (timeTemp + 3600000)){    // 1h = 3600000  // weather/forecast referesh time
-    WB.update();
-    updateScreen = true;
-    timeTemp = millis();
-  }
+  if (String(Ethernet.localIP()) == "0") {
+    tft.setTextColor(65535);
+    tft.fillScreen(0);
 
-  if(round(insideTempOld) != round(insideTemp) || updateScreen){
-    setBackground();
-    printData();
-    insideTempOld = insideTemp;
+    tft.setTextSize(3);
+    tft.setCursor(40,140);
+    tft.println("No internet connection!");
+
+    tft.setTextSize(6);
+    tft.setCursor(5,5);
+    tft.println("     " + String(round(insideTemp)));
+
+    if (WB.init()) {
+      WB.update();
+      updateScreen = true;
+    }
+  } else {
+    if(millis() >= (timeTemp + 3600000)){    // 1h = 3600000  // weather/forecast referesh time
+      WB.update();
+      updateScreen = true;
+      timeTemp = millis();
+    }
+
+    if(round(insideTempOld) != round(insideTemp) || updateScreen){
+      setBackground();
+      printData();
+      insideTempOld = insideTemp;
+    }
   }
 
   delay(60000);   // Inside temp referesh time

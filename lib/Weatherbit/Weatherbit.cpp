@@ -21,6 +21,7 @@ void Weatherbit::updateWeather()
     } else {
         // if you couldn't make a connection:
         Serial.println(F("connection failed"));
+        init();
     }
 
     delay(2000); // Waitig data
@@ -77,6 +78,7 @@ void Weatherbit::updateForecast()
     } else {
         // if you couldn't make a connection:
         Serial.println(F("connection failed"));
+        init();
     }
 
     delay(2000); // Waitig data
@@ -135,7 +137,7 @@ Weatherbit::~Weatherbit()
 {
 }
 
-void Weatherbit::init()
+boolean Weatherbit::init()
 {
     // Ethernet SS pin
     Ethernet.init(53);
@@ -150,8 +152,9 @@ void Weatherbit::init()
                 delay(1); // do nothing, no point running without Ethernet hardware
             }
         }
+        return false;
     } else {
-        Serial.print(F("  DHCP assigned IP "));
+        Serial.print(F("DHCP assigned IP "));
         Serial.println(Ethernet.localIP());
     }
 
@@ -159,6 +162,8 @@ void Weatherbit::init()
     delay(1000);
 
     client.setTimeout(10000);
+
+    return true;
 }
 
 void Weatherbit::update()
