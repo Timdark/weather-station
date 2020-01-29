@@ -145,7 +145,7 @@ void setBackground() {
   time_t utc = WB.getEpochNow();
   time_t localTime = fi.toLocal(utc);
 
-  if(hour(localTime) < 2 && hour(localTime) > 19) {            // Yo
+  if(hour(localTime) < 2 || hour(localTime) > 19) {            // Yo
     drawArrayJpeg(yo, sizeof(yo),0,0);
     light_dark = false;
   } else if (hour(localTime) < 8) {                            // Aamu
