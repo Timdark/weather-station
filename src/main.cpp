@@ -145,16 +145,16 @@ void setBackground() {
   time_t utc = WB.getEpochNow();
   time_t localTime = fi.toLocal(utc);
 
-  if(hour(localTime) <= 6) {            // Yo
+  if(hour(localTime) < 2 && hour(localTime) > 19) {            // Yo
     drawArrayJpeg(yo, sizeof(yo),0,0);
     light_dark = false;
-  } else if (hour(localTime) <= 12) {   // Aamu
+  } else if (hour(localTime) < 8) {                            // Aamu
     drawArrayJpeg(aamu, sizeof(aamu),0,0);
     light_dark = true;
-  } else if (hour(localTime) <= 18) {    // Päivä
+  } else if (hour(localTime) < 14) {                           // Päivä
     drawArrayJpeg(paiva, sizeof(paiva),0,0);
     light_dark = true;
-  } else if (hour(localTime) <= 24){     // Ilta
+  } else if (hour(localTime) < 20){                            // Ilta
     drawArrayJpeg(ilta, sizeof(ilta),0,0);
     light_dark = false;
   }
@@ -246,7 +246,7 @@ void printData() {
 
   // Temp outside and inside now
   tft.setTextSize(6);
-  tft.setCursor(5,5);        // middle 240,70
+  tft.setCursor(5,5);
   if (round(WB.getAppTempNow()) > -1) {
     tft.print(" " + String(round(WB.getAppTempNow())));
   } else {
