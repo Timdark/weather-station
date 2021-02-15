@@ -17,7 +17,10 @@ Project using Weatherbit.io free weather/forecast service.
 
 ## Screen shots
 
-- Coming soon
+![IMG_20200128_232720](https://user-images.githubusercontent.com/32216377/107982292-6c8b1d80-6fcc-11eb-91ae-5bddfc8bfa92.jpg)
+![IMG_20200129_000804](https://user-images.githubusercontent.com/32216377/107982317-7a40a300-6fcc-11eb-8122-ca9d2200fa83.jpg)
+![IMG_20200129_140229](https://user-images.githubusercontent.com/32216377/107982321-7ca2fd00-6fcc-11eb-9757-b677024b12d9.jpg)
+![IMG_20200129_142453](https://user-images.githubusercontent.com/32216377/107982328-7e6cc080-6fcc-11eb-92eb-39783cee7485.jpg)
 
 ## Secret variables file
 
